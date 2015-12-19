@@ -1,0 +1,13 @@
+{
+  "title": "Spoiler Jedi",
+  "name": "spoiler_jedi",
+  "version": "1.0.0",
+  "description": "Your personal Jedi knight to protect you from Star Wars VII spoilers",
+  "main": "index.js",
+  "author": "Sidhant Sharma [:tk]",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MIT"
+}
