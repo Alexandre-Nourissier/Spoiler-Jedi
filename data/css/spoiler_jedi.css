@@ -78,14 +78,17 @@ data:application/font-woff;base64,d09GRgABAAAAAGp8ABMAAAAA3mQAAQAAAAAAAAAAAAAAAA
     background: #DDD none repeat scroll 0% 0% !important;
     border: none !important;
     border-radius: 3px;
+    margin: 20px;
 }
 
 .main {
     font-size: 1.3em;
+    margin: 15px;
 }
 
 .warn {
     font-family: Franklin_Gothic_Book;
+    margin: 10px;
 }
 
 .noselect {

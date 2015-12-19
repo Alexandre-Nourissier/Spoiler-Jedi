@@ -1,21 +1,5 @@
 (function() {
 
-    var SPOILER_ALERT_TEMPLATE = "" +
-        "<div class='spoiler-container noselect' id='StarWarsSpoilerAlert'>" +
-            "<div class='spoiler-header'>" +
-                "STAR WARS SPOILER" +
-            "</div>" +
-            "<div class='spoiler-body'>" +
-                "<p class='main'> The Force is %level% strong with this one... </p>" +
-                "<p class='warn'>" +
-                      "Tread carefully Jedi Master..." +
-                "</p>" +
-                "<button class='spoiler-continue' id='fearlessJediContinue'>" +
-                        "Continue?" +
-                "</button>" +
-            "</div>" +
-        "</div>";
-
     var isTheForceStrongWithThisOne = function(docText) {
         var forceIntensity = -1; // -1 = normal, 0 = potential spoiler, 1 = definite spoiler
         docText = docText.toLowerCase();
@@ -35,28 +19,58 @@
             forceIntensity = 0;
         else if (definite_spoilers_count > 1)
             forceIntensity = 1;
-        console.log("p: " + potential_spoilers_count + " d: " + definite_spoilers_count)
         return forceIntensity;
     };
 
-    // star wars spoiler alert
-    var showWarning = function(warningLevel) {
-        var alert = SPOILER_ALERT_TEMPLATE;
-        alert = alert.replace("%level%", warningLevel == 1 ? "extremely" : "");
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(alert, "text/html");
-        var x = doc.body.firstChild;
-        document.body.appendChild(x);
-        document.getElementById("fearlessJediContinue").addEventListener("click", function() {
-            console.log("Fearless Jedi has chosen to move on.")
+    var getAlertDom = function(strength) {
+        // Container
+        var container = document.createElement('div');
+        container.id = "StarWarsSpoilerAlert";
+        container.className = "spoiler-container noselect";
+
+        // Header
+        var header = document.createElement('div');
+        header.className = "spoiler-header";
+        header.appendChild(document.createTextNode("STAR WARS SPOILER"));
+
+        // Body
+        var body = document.createElement('div');
+        body.className = "spoiler-body";
+
+        //// Main warning
+        var main = document.createElement('p');
+        main.className = "main";
+        main.appendChild(document.createTextNode("The Force is " +
+                                strength + " strong with this one..."));
+
+        //// Warning
+        var warning = document.createElement('p');
+        warning.className = "warn";
+        warning.appendChild(document.createTextNode("Tread carefully Jedi Master..."));
+
+        //// Continue button
+        var continueButton = document.createElement('button');
+        continueButton.className = "spoiler-continue";
+        continueButton.appendChild(document.createTextNode("Continue?"));
+        continueButton.addEventListener("click", function() {
             document.body.removeChild(document.getElementById("StarWarsSpoilerAlert"));
         });
+
+        // Assemble
+        body.appendChild(main);
+        body.appendChild(warning);
+        body.appendChild(continueButton);
+        container.appendChild(header);
+        container.appendChild(body);
+        return container;
     }
 
     var helpMeObiWanKenobi = function() {
         var forceIntensity = isTheForceStrongWithThisOne(document.body.textContent);
-        if (forceIntensity > -1) showWarning(forceIntensity);
-        else console.log("This place is safe.")
+        if (forceIntensity > -1)
+            document.body.appendChild(
+                    getAlertDom(forceIntensity == 1 ? "extremely" : "")
+            );
     }
 
     var potential_spoilers = [
