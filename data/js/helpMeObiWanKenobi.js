@@ -176,7 +176,9 @@
         "supreme leader snoke",
         "snoke",
         "clones",
-        "clone army"
+        "clone army",
+        "the last jedi",
+        "falcon"
     ];
 
     var definite_spoilers = [
